@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sbatch -p build --time=12:00:00 --mem=10G build.gcc.sh
