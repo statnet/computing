@@ -1,4 +1,4 @@
 #!/bin/bash
- 
-source ~/loadR.sh 
+
+source ~/loadR.sh
 Rscript sim.R
