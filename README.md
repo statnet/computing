@@ -1,3 +1,5 @@
-General Information on Computing for EpiModel-Affiliated Researchers
+# Computing for EpiModel-Affiliated Researchers
 
-Currently, everything is located on the wiki: https://github.com/statnet/computing/wiki
+1. See the scripts in the `build` folder to show how to load R and EpiModel-related R packages.
+2. Run scripts for the new Slurm batched workflow are found in the `slurmLite` folder. 
+3. Additional details about computing are found on the wiki: https://github.com/statnet/computing/wiki
