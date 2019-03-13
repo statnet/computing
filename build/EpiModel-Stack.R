@@ -2,12 +2,12 @@
 # Install EpiModel Stack
 install.packages("EpiModel", dependencies = TRUE)
 
-# Install Extra Helper Packages
-install.packages("tidyverse", dep = TRUE)
-install.packages("devtools", dep = TRUE)
-install.packages("remotes", dep = TRUE)
+# Install EpiModel Stack
+install.packages("EpiModel", dependencies = TRUE)
 
-# Latest Dev Versions of Packages
+# Install remotes to install Github packages
+install.packages("remotes")
+
 remotes::install_github(c("statnet/network",
                           "statnet/statnet.common",
                           "statnet/ergm",
@@ -18,4 +18,5 @@ remotes::install_github(c("statnet/EpiModel",
                           "statnet/tergmLite",
                           "EpiModel/EpiABC"))
 
-remotes::install_github("EpiModel/EpiModelHIV-p")
+remotes::install_github("EpiModel/EpiModelHIV-p", ref = "Your-Branch-Name")
+
