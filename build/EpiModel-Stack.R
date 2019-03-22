@@ -1,9 +1,6 @@
 
 # Install EpiModel Stack
-install.packages("EpiModel", dependencies = TRUE)
-
-# Install EpiModel Stack
-install.packages("EpiModel", dependencies = TRUE)
+install.packages("EpiModel")
 
 # Install remotes to install Github packages
 install.packages("remotes")
