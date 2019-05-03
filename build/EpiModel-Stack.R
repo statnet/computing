@@ -6,9 +6,10 @@ install.packages("EpiModel")
 install.packages("remotes")
 
 remotes::install_github(c("statnet/network",
-                          "statnet/statnet.common",
-                          "statnet/ergm",
-                          "statnet/tergm"))
+                          "statnet/networkDynamic",
+                          "statnet/statnet.common"))
+remotes::install_github("statnet/ergm", ref = "8b30e92")
+remotes::install_github("statnet/tergm", ref = "d3af1355")
 
 remotes::install_github(c("statnet/EpiModel",
                           "statnet/EpiModelHPC",
