@@ -8,9 +8,9 @@ Scripts to Build and Load R on Hyak (Ikt and Mox)
 
 ### Updating Your MODULEPATH
 
-Due to an in-progress bug fix for Spack (https://github.com/spack/spack/issues/12915), it is currently (as of 09/24/19) required to specify the location of where the spack module files are stored, as follows:
+Due to an in-progress bug fix for Spack (https://github.com/spack/spack/issues/12915), it is currently (as of 09/24/19) required to specify the location of where the spack module files are stored, by adding the following two lines to your `.bashrc` file: 
 
-```
+```bash
 export MODULEPATH=$MODULEPATH:/gscratch/csde/spack/spack/share/spack/modules/linux-centos7-haswell/
 export MODULEPATH=$MODULEPATH:/gscratch/csde/spack/spack/share/spack/modules/linux-centos7-broadwell/
 ```
