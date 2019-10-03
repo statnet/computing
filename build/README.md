@@ -6,15 +6,6 @@ Scripts to Build and Load R on Hyak::Mox
 `buildR.sh` and `buildR.master.sh` are used by the R software maintainer on Hyak (`sjenness`) to build the core R environment. These are not needed or used by end-users of Statnet/EpiModel. 
 
 
-### Updating Your MODULEPATH
-
-Due to an in-progress bug fix for Spack (https://github.com/spack/spack/issues/12915), it is currently (as of 09/24/19) required to specify the location of where the spack module files are stored, by adding the following two lines to your `.bashrc` file: 
-
-```bash
-export MODULEPATH=$MODULEPATH:/gscratch/csde/spack/spack/share/spack/modules/linux-centos7-haswell/
-export MODULEPATH=$MODULEPATH:/gscratch/csde/spack/spack/share/spack/modules/linux-centos7-broadwell/
-```
-
 ### Loading R
 
 After a version of R has been built, it may be loaded with the `loadR.sh` script. This script can go in the end-users home directory: `/usr/lusers/USERID`, which is where you land when you login to Hyak. If you do so, you can load R immediately upon login to any node (login, interactive, build) simply with:
