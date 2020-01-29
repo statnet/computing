@@ -6,6 +6,6 @@
 2. Run scripts for the new Slurm batched workflow are found in the `slurmLite` folder. 
 3. Additional details about computing are found on the wiki: https://github.com/statnet/computing/wiki
 
-## Onboarding
+## EpiModel Lab Onboarding
 
 See the Wiki page for EpiModel team onboarding information: https://github.com/statnet/computing/wiki
