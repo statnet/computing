@@ -1,143 +1,76 @@
 # Reproducible R environments
 
-## Problems to be solved
+## Overview
 
-1. How to keep track of every R package version required for a research project
-2. How to deal with different projects using different versions of a package
-3. How to ensure our project can be run on another machine at another time
+As we work with different research projects, we often need different versions 
+of our R packages. 
 
-## The renv package (by Rstudio)
+Using the [`renv` package from RStudio](https://rstudio.github.io/renv/) we can
+easily record the current state of our projects as well as record the specific
+versions of packages required to make it work.
 
-Description from the [renv website](https://rstudio.github.io/renv/)
+## Example workflow
 
-> ## Overview
->
->The renv package helps you create reproducible environments for your R projects. Use renv to make your R projects more:
->
->Isolated: Installing a new or updated package for one project won’t break your other projects, and vice versa. That’s because renv gives each project its own private package library.
->
->Portable: Easily transport your projects from one computer to another, even across different platforms. renv makes it easy to install the packages your project depends on.
->
->Reproducible: renv records the exact package versions you depend on, and ensures those exact versions are the ones that get installed wherever you go.
->Installation
->
->Install from CRAN
->
-> ```
->  install.packages("renv")
-> ```
->
-> ## Workflow
->
->Use `renv::init()` to initialize renv with a new or existing project. This will set up your project with a private library, and also make sure to install all of the packages you’re using into that library. The packages used in your project will be recorded into a lockfile, called renv.lock.
->
->As you work in your project, you may need to install or upgrade different packages. As these packages are installed, renv will automatically write renv.lock for you. The renv.lock lockfile records the state of your project’s private library, and can be used to restore the state of that library as required.
->
->Later, if you need to port your project to a new machine, you can call `renv::restore()` to reinstall all of the packages as declared in the lockfile.
+### Personal computer
 
-## Example of an renv setup
+Let's start with a new project on our personal computer:
 
-This is the setup from a HIV modeling project using EpiModel. Once the setup is finished, 89 packages are installed (including the dependencies) and some packages require specific versions.
+1. Create the project with RStudio
+2. run `renv::init()` in the R console (from the project)
+3. reload the project
+4. Work as usual
 
-Two scripts were made to simplify the process:
+Once renv is initialize, we find ourselves in a project were no packages
+installed. We can install what we need using `install.packages()` and 
+`remotes::install_github()` as usual. The packages are installed in the 
+project's library, allowing multiple projects to use a different version of the 
+same package (e.g. EpiModelHIV).
 
-1. "init_renv.R": Install and initialize renv non interactively
-2. "install_stack.R": Restore the environment if a "renv.lock" is present or install the packages
+The `renv::snapshot()` command record the state of the packages in the project 
+into a "renv.lock" file. This file contains the information on every packages 
+and their versions. This will permit to rebuild the environment of the project 
+easily on another computer.
 
-### init_renv.R
+## Moving to hyak
 
-This script is ran from the root of the project. `Rscript init_renv.R`
+Let's consider now that our project has grown and needs to run simulations on 
+hyak. 
 
-```
-install.packages("renv")       # ensures that renv is install on the system
-renv::consent(provided = true) # allows to run the script non interactively
-renv::init(bare = t)           # initialize an empty library
-```
+I assume your project is now living in a private GitHub repository, with the 
+"renv.lock" file up to date and in the repository.
 
-### install_stack.R
+### Preparation
 
-This script is ran from the root of the project, after "init_renv.R".
-`Rscript install_stack.R`
+Before we can continue we need to add the following lines to our "~/.bashrc" 
+file: 
 
-or `Rscript install_stack.R my_github_token`
+> export RENV_PATHS_ROOT="/gscratch/csde/<user>/renv/"
+> export GITHUB_PAT="<your github private access token>"
 
-If a "renv.lock" file is found, renv will restore the project with the exact version of each package.
+In the first line, replace <user> by your user name. This tells `renv` to store 
+the files for the packages on the "csde" partition and not on the home folder. 
+The latter can cause problems as the size of the home folder is limited on hyak.
 
-If no lockfile is present, the script will install the packages described in the second part of the if/else statement. This method may lead to differences if some packages have been updated. This is even more true for github packages.
+The second line should contain your Github Private Access Token. This will 
+allow `renv` to download packages from private GitHub repositories. This can be 
+ignored if you stored it in your ".Renviron".
+
+### Bootsraping a project
+
+We may want to start a build session if we expect the package installation to 
+require a lot of CPU and RAM.
+
+1. First we move to our "gscratch" folder: `cd gscratch/csde/<user>/`. 
+2. `git clone https://<your github private access token>@github.com/<your/project.git>`
+3. Enter the project `cd <project>`
+4. Start R (you may need to load it first)
+5. In R: `renv::init()`. This will read the "renv.lock" file and install the 
+correct version for each package.
 
 
-```
-# If private github packages are needed create a token by going to
-# https://github.com/settings/tokens
-# (Settings / Developer settings / Personal access token)
-# Select the `repo` scope
+## Misc
 
-# If your token is not stored as an environment variable
-# This script accept a GitHub token as an optional argument
-args <- commandArgs(TRUE)
-if (! is.null(args[1]))
-  Sys.setenv(GITHUB_PAT = args[1])
+`renv` offers a lot of advanced functionalities that are explained in more 
+details on [the official website](https://rstudio.github.io/renv/)
 
-# Packages installation
-if (file.exists("renv.lock")) {# Restore from a lockfile if it exists.
 
-  renv::restore(confirm = FALSE) # Do not ask for confirmation
-
-} else { # Otherwise install the packages and make a lockfile
-
-  # CRAN packages
-  install.packages(c(
-    "remotes",
-    "callr",
-    "dplyr",
-    "tidyr"
-  ))
-
-  # Github packages
-  renv::install(c(
-    "statnet/network",
-    "statnet/EpiModel",
-    "statnet/EpiModelHPC",
-    "statnet/tergmLite",
-    "EpiModel/EpiABC",
-    "EpiModel/ARTnetData",
-    "EpiModel/ARTnet@ARTnet_hivprev",
-    "EpiModel/EpiModelHIV-p@db316a6")
-  )
-
-  # save lockfile | save all packages even if they are not used by the project
-  renv::snapshot(type = "simple")
-}
-```
-
-## renv cache
-
-To save diskspace and install time, renv actually install all packages into a cache folder and links the relevant packages to each project library.
-
-By default renv will store it's information in these folders:
-
-| Platform | Location                           |
-|----------|------------------------------------|
-| Linux    | ~/.local/share/renv                |
-| macOS    | ~/Library/Application Support/renv |
-| Windows  | %LOCALAPPDATA%/renv                |
-
-This can be a problem on HPC such as hyak where the home folder is limited in size. You can change the default renv folder by adding this line to your ~/.bashrc.
-
-```
-export RENV_PATHS_ROOT="/gscratch/csde/<user>/<renv_root_folder>/"
-```
-
-The renv root folder can be shared among users.
-
-## Things to keep in mind when using renv
-
-### Working directory
-
-renv is loaded automatically when you start R from the root of the project. However, if you start R from another folder (even child folder), R will not initialize renv as it requires the ".Rprofile" created by `renv::init()`.
-
-In any case, you should always run R from the root of your project, use relative path and never use `setwd`. If needed use [the here package](https://rstudio.github.io/renv/)
-
-### Dependencies
-
-By default `renv::snapshot()` will only record the packages needed for the project (i.e. loaded by `library` or `package::funciton`). To force renv to save all the install packages, use `renv::snapshot(type = "simple")`
