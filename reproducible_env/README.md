@@ -45,7 +45,8 @@ Before we can continue we need to add the following lines to our "~/.bashrc"
 file: 
 
 > export RENV_PATHS_ROOT="/gscratch/csde/<user>/renv/"
-> export GITHUB_PAT="<your github private access token>"
+>  
+> export GITHUB_PAT="\<your github private access token\>"
 
 In the first line, replace <user> by your user name. This tells `renv` to store 
 the files for the packages on the "csde" partition and not on the home folder. 
