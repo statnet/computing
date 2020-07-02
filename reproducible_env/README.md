@@ -44,13 +44,26 @@ I assume your project is now living in a private GitHub repository, with the
 Before we can continue we need to add the following lines to our "~/.bashrc" 
 file: 
 
-> export RENV_PATHS_ROOT="/gscratch/csde/\<user\>/renv/"
->  
-> export GITHUB_PAT="\<your github private access token\>"
+```
+export RENV_PATHS_ROOT="/gscratch/csde/renv/"
+
+export GITHUB_PAT="\<your github private access token\>"
+```
 
 In the first line, replace <user> by your user name. This tells `renv` to store 
 the files for the packages on the "csde" partition and not on the home folder. 
 The latter can cause problems as the size of the home folder is limited on hyak.
+  
+> ### Note if /gscratch/csde/renv/" does not yet exist
+>
+> In this case renv will create it automatically on first use. However, for the other 
+> users to use it, the following command should be run by the folder's owner
+>
+> `chmod -R g+rwx /gscratch/csde/renv/`
+>
+> Currently on hyak, Sam Jenness is the owner of the folder and the permissions
+> are already correct.
+
 
 The second line should contain your Github Private Access Token. This will 
 allow `renv` to download packages from private GitHub repositories. This can be 
