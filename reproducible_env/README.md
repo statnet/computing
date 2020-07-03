@@ -81,6 +81,31 @@ require a lot of CPU and RAM.
 5. In R: `renv::init()`. This will read the "renv.lock" file and install the 
 correct version for each package.
 
+### Running scripts on Hyak
+
+Once `renv` is setup for your project you can run your sbatch scripts. In order for sbatch to 
+use `renv`, you MUST run your scripts from the project root folder.
+
+If your project structure is as follow:
+
+```
+project_root /
+    - R/
+        - script1.R
+        - script2.R
+        - script3.R
+    - abc/
+        - out/
+        - master.sh     # script containing the sbatch calls
+    - data/
+    - renv/             # folder automatically created by renv
+    - .Rprofile         # file automatically created by renv
+    - renv.lock         
+    - loadR.sh          # script to load R module from spack
+ ```
+
+You must then run `source abc/master.sh` from the "project_root" 
+(the shell prompt should look like this: `[username@mox1 project_root]$`)
 
 ## Misc
 
