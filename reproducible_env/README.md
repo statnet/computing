@@ -31,6 +31,22 @@ into a "renv.lock" file. This file contains the information on every packages
 and their versions. This will permit to rebuild the environment of the project 
 easily on another computer.
 
+#### Git / GitHub
+
+Once the project works with `renv`, we can track the "renv.lock" file with git.
+However, this is the only file from `renv` we should put on git/GitHub. The
+"renv" folder and the ".Rprofile" created automatically should remain untracked.
+That is because they contain information potentially specific to the user
+configuration.
+
+If you are used to add everything with git, you can append the following lines
+to your ".gitignore" file. To force git to ignore these files.
+
+```
+renv/*
+.Rprofile
+```
+
 ## Moving to hyak
 
 Let's consider now that our project has grown and needs to run simulations on 
