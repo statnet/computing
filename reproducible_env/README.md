@@ -47,6 +47,13 @@ renv/*
 .Rprofile
 ```
 
+__NOTE__
+
+When pulling an updated version of the "renv.lock" file (for example a when 
+contributor updated one of the packages), you should manually run `renv::status()`
+to check whether or not `renv::restore()` is necessary. `R` will not tell you on 
+it's own if the lockfile is out of sync.
+
 ## Moving to hyak
 
 Let's consider now that our project has grown and needs to run simulations on 
