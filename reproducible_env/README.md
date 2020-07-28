@@ -85,7 +85,7 @@ The second line should contain your Github Private Access Token. This will
 allow `renv` to download packages from private GitHub repositories. This can be 
 ignored if you stored it in your ".Renviron".
 
-### Bootsraping a project
+### Bootstraping a project
 
 We may want to start a build session if we expect the package installation to 
 require a lot of CPU and RAM.
