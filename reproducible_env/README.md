@@ -87,7 +87,6 @@ The latter can cause problems as the size of the home folder is limited on hyak.
 > Currently on hyak, Sam Jenness is the owner of the folder and the permissions
 > are already correct.
 
-
 The second line should contain your Github Private Access Token. This will 
 allow `renv` to download packages from private GitHub repositories. This can be 
 ignored if you stored it in your ".Renviron".
@@ -99,9 +98,12 @@ require a lot of CPU and RAM.
 
 1. First we move to our "gscratch" folder: `cd gscratch/csde/<user>/`. 
 2. `git clone https://<your github private access token>@github.com/<your/project.git>`
-3. Enter the project `cd <project>`
-4. Start R (you may need to load it first)
-5. In R: `renv::init()`. This will read the "renv.lock" file and install the 
+3. Enter the project: `cd <project>`
+4. Copy your "loadR.sh" script into your project: `cp ~/loadR.sh ./` (see
+   [the build section](build/README.md))
+5. Load R: `source loadR.sh`
+6. Start R: `R`
+7. In R: `renv::init()`. This will read the "renv.lock" file and install the 
 correct version for each package.
 
 ### Running scripts on Hyak
