@@ -100,7 +100,7 @@ require a lot of CPU and RAM.
 2. `git clone https://<your github private access token>@github.com/<your/project.git>`
 3. Enter the project: `cd <project>`
 4. Copy your "loadR.sh" script into your project: `cp ~/loadR.sh ./` (see
-   [the build section](../build/README.md))
+   [the build section](../build/README.md#loading-r))
 5. Load R: `source loadR.sh`
 6. Start R: `R`
 7. In R: `renv::init()`. This will read the "renv.lock" file and install the 
