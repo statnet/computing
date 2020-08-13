@@ -20,6 +20,25 @@ You might even further automate the loading with an `alias` like this:
 alias int='source ~/loadR.sh && R --no-save'
 ```
 
+#### Error on first run
+
+When running this script for the first time, an error like this may occur:
+
+```bash
+==> Error: No compilers for operating system centos7 satisfy spec gcc@9.2.0
+```
+
+In this case, the following lines have to be run (just once).
+
+```bash
+. /gscratch/csde/spack/spack/share/spack/setup-env.sh
+spack load gcc@9.2.0
+spack compiler find
+```
+
+After a session restart, the `loadR.sh` script will work.
+
+
 ### Building the R package stack for EpiModelHIV
 
 After you have loaded R on a build node, you can install all the necessary packages for `EpiModelHIV` by running the `EpiModel-Stack.R` script (usually in an interactive session). Update the EpiModelHIV branch name and add any other packages you might need. That's it! Now you're ready to run simulations using the `slurmLite` approach.
