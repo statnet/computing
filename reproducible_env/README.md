@@ -73,9 +73,9 @@ export RENV_PATHS_ROOT="/gscratch/csde/renv/"
 export GITHUB_PAT="\<your github private access token\>"
 ```
 
-In the first line, replace <user> by your user name. This tells `renv` to store 
-the files for the packages on the "csde" partition and not on the home folder. 
-The latter can cause problems as the size of the home folder is limited on hyak.
+This tells `renv` to store the files for the packages on the "csde" partition
+and not on the home folder. The latter can cause problems as the size of the home
+folder is limited on hyak.
   
 > ### Note if /gscratch/csde/renv/" does not yet exist
 >
