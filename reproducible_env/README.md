@@ -68,7 +68,7 @@ Before we can continue we need to add the following lines to our "~/.bashrc"
 file: 
 
 ```
-export RENV_PATHS_ROOT="/gscratch/csde/<your user name>/renv/"
+export RENV_PATHS_ROOT="/gscratch/csde/<user>/renv/"
 
 export GITHUB_PAT="\<your github private access token\>"
 ```
